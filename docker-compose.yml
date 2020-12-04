@@ -1,0 +1,52 @@
+version: '3.7'
+
+volumes:
+  postgres_data:
+
+services:
+
+  celery:
+    build: ./
+    container_name: 'celery_scheduler'
+    command: celery -A flaskapp.celery worker -B
+    depends_on:
+      - db
+      - redis
+    links:
+      - redis
+      - db
+    environment:
+      - TZ=Europe/Moscow
+    env_file:
+      - ./.env
+
+  flask:
+    build: .
+    depends_on:
+      - db
+      - redis
+    links:
+      - redis
+      - db
+    environment:
+      - TZ=Europe/Moscow
+    env_file:
+      - ./.env
+    ports:
+      - 5000:5000
+  db:
+    build: ./postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:6.0.9
+    restart: always
+    container_name: 'redis_broker_container'
+    ports:
+      - 6379:6379
+
