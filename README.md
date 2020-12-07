@@ -11,8 +11,30 @@
 
 Запуск
 
+
 Склонируйте репозиторий и выполните:
 
+- Создайте файл .env с переменными окружения, к примеру:
+
+  BROKER_URL=redis://redis_broker_container:6379/0
+  
+  DATABASE_URL=postgresql://postgres:123123@db/postgres
+  
+  DB_NAME=postgres
+  
+  DB_USER=postgres
+  
+  DB_PASSWORD=123123
+  
+
+
+  POSTGRES_USER=postgres
+  
+  POSTGRES_PASSWORD=123123
+  
+  POSTGRES_DB=postgres
+  
+  
 - docker-compose build
 - docker-compose up
 
