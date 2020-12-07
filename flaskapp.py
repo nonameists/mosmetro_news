@@ -61,8 +61,8 @@ class NewsAPI(Resource):
     def get(self):
         # забираются переданные дни
         days = int(request.args['days'])
-        # запрос в базу и берем срез за кол-во дней указанных в запросе
-        news = News.query.all()[:days]
+        # запрос в базу и делаем limit на кол-во дней в запросе
+        news = News.query.limit(days).all()
         return news_schema.dump(news)
 
 
