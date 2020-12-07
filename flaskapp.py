@@ -53,6 +53,9 @@ class NewsSchema(ma.Schema):
         model = News
 
 
+news_schema = NewsSchema(many=True)
+
+
 # endpoint для получения новостей
 class NewsAPI(Resource):
     def get(self):
@@ -94,7 +97,6 @@ def news_is_exists(title) -> bool:
     return False
 
 
-news_schema = NewsSchema(many=True)
 api.add_resource(NewsAPI, '/news', endpoint='news')
 
 
